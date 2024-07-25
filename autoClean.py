@@ -42,7 +42,7 @@ def get_files_date_ascending(folder_path):
 for folder in folder_list:
   print(get_folder_size(folder))
   files = get_files_date_ascending(folder)
-  while(get_folder_size(folder) > max_sizeGB):
+  while(get_folder_size(folder) > max_sizeByte):
     os.remove(files[0])
     print(files[0], " removed")
     files.remove(files[0])
