@@ -3,7 +3,7 @@
 To run program type following command
 after folder path write max size of folder in GB
 
-.\autoClean.exe C:\path\to\folder 300
+autoClean C:\path\to\folder 300
 
 # what program does
 
