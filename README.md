@@ -1,17 +1,38 @@
-# autodelete_script
+# 🧹 Folder Cleaner (Python)
 
-To run program type following command
-after folder path write max size of folder in GB
+Набор утилит для автоматической очистки папок, если они превышают заданный лимит по размеру.
 
-autoClean C:\path\to\folder 300
+## 📦 Описание
 
-# what program does
+Проект содержит два скрипта:
 
-program gets path to the folder containing folders in which are files
-after the program analyses the size of each folder and deletes oldest files from those folders
-in order to make them less or equal minimum size
+### 🔸 Fast Folder Cleaner (`cleaner_fast.py`)
+Простой и быстрый способ очистки:
+- Удаляет всё содержимое первой найденной подпапки
+- Повторяет, пока папка не станет меньше лимита
+- Подходит для временных данных, кешей и логов
 
-v2 removes folders in order to make main folder needed size
+### 🔹 Smart Folder Cleaner (`cleaner_smart.py`)
+Более аккуратный подход:
+- Проходит по всем подпапкам
+- Удаляет **старые файлы** в первую очередь
+- Не трогает `.ini` файлы
+- Отлично подходит для логов и важных данных
 
-# compile
-to compile just use pyinstaller -F autoClean.py
+## 🛠 Пример запуска
+
+```bash
+python cleaner_fast.py <путь> <лимит_в_ГБ> -v
+python cleaner_smart.py <путь> <лимит_в_ГБ>
+```
+## Пример
+
+```bash
+python cleaner_smart.py D:\Logs 2
+```
+
+## ВАЖНОЕ!
+
++ Скрипты безвозвратно удалят данные
++ Работает на Python 3.x
++ Требуют прав доступа к указанной папке
