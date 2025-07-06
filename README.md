@@ -1,38 +1,38 @@
 # 🧹 Folder Cleaner (Python)
 
-Набор утилит для автоматической очистки папок, если они превышают заданный лимит по размеру.
+A set of utilities for automatically cleaning folders if they exceed a specified size limit.
 
-## 📦 Описание
+## 📦 Description
 
-Проект содержит два скрипта:
+The project contains two scripts:
 
 ### 🔸 Fast Folder Cleaner (`cleaner_fast.py`)
-Простой и быстрый способ очистки:
-- Удаляет всё содержимое первой найденной подпапки
-- Повторяет, пока папка не станет меньше лимита
-- Подходит для временных данных, кешей и логов
+A simple and fast cleaning method:
+- Deletes all contents of the first found subfolder
+- Repeats until the folder is below the size limit
+- Suitable for temporary data, caches, and logs
 
 ### 🔹 Smart Folder Cleaner (`cleaner_smart.py`)
-Более аккуратный подход:
-- Проходит по всем подпапкам
-- Удаляет **старые файлы** в первую очередь
-- Не трогает `.ini` файлы
-- Отлично подходит для логов и важных данных
+A more careful approach:
+- Iterates through all subfolders
+- Deletes **old files** first
+- Does not touch `.ini` files
+- Perfect for logs and important data
 
-## 🛠 Пример запуска
+## 🛠 Example Usage
 
 ```bash
-python cleaner_fast.py <путь> <лимит_в_ГБ> -v
-python cleaner_smart.py <путь> <лимит_в_ГБ>
+python cleaner_fast.py <path> <limit_in_GB> -v
+python cleaner_smart.py <path> <limit_in_GB>
 ```
-## Пример
+## Example
 
 ```bash
 python cleaner_smart.py D:\Logs 2
 ```
 
-## ВАЖНОЕ!
+## IMPORTANT!
 
-+ Скрипты безвозвратно удалят данные
-+ Работает на Python 3.x
-+ Требуют прав доступа к указанной папке
++ The scripts will irreversibly delete data
++ Works on Python 3.x
++ Requires access permissions to the specified folder
