@@ -75,15 +75,15 @@ Write-Log -Message "=== Script Start Executing ==="
 Invoke-Log-Retention -RetentionPeriod 90 -LogDir $LogDirMain
 
 if(-not(Test-Path -LiteralPath $Root)){
-    Write-Log -Message "Path is not valid" -Level "ERROR"
+    Write-Log -Message "Path is not valid: $($Root)" -Level "ERROR"
     throw
 }
 
 $RootDirTotalSize = Get-dirSizeBytes -Path $Root
-Write-Log -Message "Root dir size - $([math]::Round(($RootDirTotalSize / 1MB),2)) MB" -Level "DEBUG"
+Write-Log -Message "Root dir [$($Root)] size - $([math]::Round(($RootDirTotalSize / 1MB),2)) MB" -Level "DEBUG"
 
 if ($RootDirTotalSize -lt ($MaxSize * 1MB)) {
-    Write-Log -Message "The root folder smaller the given size" -Level "INFO"
+    Write-Log -Message "The Root dir [$($Root)] smaller the given size" -Level "INFO"
     Write-Log -Message "=== Exiting Script ==="
     return
 }
@@ -94,7 +94,7 @@ foreach ($SubDir in $SubDirs) {
     # Skip log dir
     if($SubDir.Name -eq 'LOG') { continue }
     $SubDirSize = Get-dirSizeBytes -Path $SubDir.FullName
-    Write-Debug "[DEBUG] SubDir size - $([math]::Round(($SubDirSize / 1MB),2)) MB"
+    Write-Debug "[DEBUG] SubDir [$($SubDir.Name)] size - $([math]::Round(($SubDirSize / 1MB),2)) MB"
 
     if($PSCmdlet.ShouldProcess($SubDir.FullName,"DELETE")){
         try {
@@ -103,7 +103,7 @@ foreach ($SubDir in $SubDirs) {
             Write-Log -Message "Folder $($SubDir.FullName) was DELETED" -Level "DEBUG"
         }
         catch {
-            Write-Log -Message "Failed to delete folder \n $($_.Exception.Message)" -Level "WARN"
+            Write-Log -Message "Failed to delete folder [$($SubDir.Name)] \n $($_.Exception.Message)" -Level "WARN"
         }
     } else {
         Write-Log -Message "Folder $($SubDir.FullName) could be DELETED" -Level "DEBUG"
@@ -111,7 +111,7 @@ foreach ($SubDir in $SubDirs) {
     }
     
     if ($RootDirTotalSize -lt ($MaxSize * 1MB)) {
-        Write-Log -Message "Root dir size after deleting subfolders - $([math]::Round(($RootDirTotalSize / 1MB),2)) MB" -Level "DEBUG"
+        Write-Log -Message "Root dir [$($Root)] size after deleting subfolders - $([math]::Round(($RootDirTotalSize / 1MB),2)) MB" -Level "DEBUG"
         break
     }
 }
