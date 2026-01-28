@@ -36,15 +36,23 @@ function Write-Log {
 
 function Get-dirSizeBytes {
     param (
-        [Parameter(Mandatory)][string]$Path
+        [Parameter(Mandatory)]
+        [ValidateScript({ Test-Path $_ -PathType Container })]
+        [string]$Path
     )
 
-    $DirSize = (Get-ChildItem -LiteralPath $Path -File -Recurse -ErrorAction Stop | Measure-Object -Sum Length).Sum
-    if($null -eq $DirSize){
-        Write-Log -Message "Failed to calculate Root dir size: $Root" -Level "ERROR"
+    try {
+        $DirSize = Get-ChildItem -LiteralPath $Path -File -Recurse -ErrorAction SilentlyContinue | Measure-Object -Sum Length
+        if ($null -eq $DirSize.Sum) {
+            return 0
+        } else {
+            return $DirSize.Sum
+        }
+    }
+    catch {
+        Write-Log -Message "Failed to calculate directory size: $Path. $($_.Exception.Message)" -Level "ERROR"
         throw
     }
-    [int64]$DirSize
 }
 
 function Invoke-Log-Retention {
